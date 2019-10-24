@@ -21,7 +21,7 @@ class Student
 
   def self.find_by_name(name)
     sql = "SELECT*FROM students WHERE name = ? LIMIT 1"
-    DB[:conn].execute(sql).map do |row|
+    DB[:conn].execute(sql, name).map do |row|
       self.new_from_db(row)
     end.first
     
@@ -43,14 +43,14 @@ class Student
     }
   end
   
-  def self.first_X_students_in_grade_10(X)
+  def self.first_X_students_in_grade_10(limit)
     sql = "SELECT*FROM students WHERE grade = 10 LIMIT ?"
     DB[:conn].execute(sql).map {|row|
       self.new_from_db(row)
     }
   end
   
-   def self.all_students_in_grade_X(X)
+   def self.all_students_in_grade_X(grade)
     sql = "SELECT*FROM students WHERE grade = ?"
     DB[:conn].execute(sql).map {|row|
       self.new_from_db(row)
